@@ -1,3 +1,4 @@
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader
 import fpinscala.datastructures.List._
 import fpinscala.datastructures.{Cons, List, Nil}
 
@@ -109,5 +110,53 @@ object Chapter3 {
 
     println(append(List(1, 2, 3), List(4)))
 
+    // question 15 - Write a function that concatenates a list of lists into a single list. Its runtime should be
+    // linear in the total length of all lists. Try to use functions we have already defined.
+
+    def concat[A](l: List[List[A]]): List[A] = {
+      foldLeft(l, Nil:List[A])(append)
+    }
+
+    println(concat(List(List(1, 2), List(3, 4), List(5, 6), List(7), List())));
+
+    // question 16 - Write a function that transforms a list of integers by adding 1 to each element.
+    // (pure function only!!!)
+    def addOne(l:List[Int]) =
+      foldRight(l, Nil:List[Int])((h, t) => Cons(h + 1, t))
+
+    println(addOne(List(1, 2, 3, 4)))
+
+    // question 17 - Write a function that turns each value in a List[Double] into a String.
+    def asString(l:List[Double]): List[String] =
+      foldRight(l, Nil:List[String])((h, t) => Cons(h.toString, t))
+
+    println(asString(List(1, 2, 3, 4, 5)))
+
+    // question 18 - Write a function map, that generalizes modifying each element in a list while maintaining the
+    // structure of the list
+    def map[A, B](l:List[A], f:A => B): List[B] =
+      foldRight(l, Nil:List[B])((h, t) => Cons(f(h), t))
+
+    println(map[String, Int](List("a", "aa", "aaa", "aaaa"), x => x.length))
+
+    // question 19 - Write a function filter that removes elements from a list unless they satisfy a given predicate.
+    // Use it to remote all odd numbers from a List[Int].
+    def filter[A](l:List[A], f:A => Boolean): List[A] = l match {
+      case Cons(x, xs) if f(x) => Cons(x, filter(xs, f))
+      case Cons(_, xs) => filter(xs, f)
+      case Nil => l
+    }
+
+    def filterV2[A](l:List[A], f:A => Boolean): List[A] =
+      foldRight(l, Nil:List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+
+    println(filter[Int](List(1, 2, 3, 4), x => x == 3))
+    println(filterV2[Int](List(1, 2, 3, 4), x => x == 3))
+
+    // question 20 - Write a function flatMap, that works like map except that the function given will return a list
+    // instead of a single result, and that list should be inserted into the final resulting list.
+//    def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] {
+//
+//    }
   }
 }
