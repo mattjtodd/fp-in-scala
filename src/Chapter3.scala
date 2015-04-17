@@ -215,6 +215,14 @@ object Chapter3 {
     }
 
     println(treeMaxLeaf(Leaf(10)))
-    println(treeMaxLeaf(Branch(Leaf(10), Leaf(20))))
+    println(treeMaxLeaf(Branch(Leaf(10), Branch(Leaf(2), Branch(Leaf(2), Leaf(9))))))
+
+    def treeDepth[A](tree: Tree[A]): Int = tree match {
+      case Leaf(x) => 0
+      case Branch(x, y) => 1 + (treeDepth(x) max treeDepth(y))
+    }
+
+    println(treeDepth(Branch(Leaf(10), Branch(Leaf(2), Branch(Leaf(2), Branch(Leaf(2), Leaf(9)))))))
   }
+
 }
