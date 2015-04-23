@@ -217,12 +217,25 @@ object Chapter3 {
     println(treeMaxLeaf(Leaf(10)))
     println(treeMaxLeaf(Branch(Leaf(10), Branch(Leaf(2), Branch(Leaf(2), Leaf(9))))))
 
+    // question 27 - Write a function depth that returns the maximum path length from the root of a tree to any leaf.
     def treeDepth[A](tree: Tree[A]): Int = tree match {
       case Leaf(x) => 0
       case Branch(x, y) => 1 + (treeDepth(x) max treeDepth(y))
     }
 
     println(treeDepth(Branch(Leaf(10), Branch(Leaf(2), Branch(Leaf(2), Branch(Leaf(2), Leaf(9)))))))
+
+    // question 28 - Write a function map, analogous to the method of the same name on List, that modifies each
+    // element in a tree with a given function.
+    def treeMap[A, B](tree: Tree[A], f: A => B): Tree[B] = {
+      case Leaf(x) => Leaf(f(_))
+      case Branch(x, y) => Branch(treeMap(x, f), treeMap(y, f))
+    }
+
+    // 29: Generalize size, maximum, depth, and map, writing a new function fold that abstracts over their similarities.
+    // Reimplement them in terms of this more general function. Can you draw an analogy between this fold function and
+    // the left and right folds for List?
+
   }
 
 }
