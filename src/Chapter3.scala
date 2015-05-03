@@ -133,7 +133,7 @@ object Chapter3 {
     def map[A, B](l: List[A], f: A => B): List[B] =
       foldRight(l, Nil: List[B])((h, t) => Cons(f(h), t))
 
-    println(map[String, Int](List("a", "aa", "aaa", "aaaa"), x => x.length))
+    println(map[String, Int](List("a", "aa", "aaa", "aaaa"), _.length))
 
     // question 19 - Write a function filter that removes elements from a list unless they satisfy a given predicate.
     // Use it to remote all odd numbers from a List[Int].
@@ -146,8 +146,8 @@ object Chapter3 {
     def filterV2[A](l: List[A], f: A => Boolean): List[A] =
       foldRight(l, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
 
-    println(filter[Int](List(1, 2, 3, 4), x => x == 3))
-    println(filterV2[Int](List(1, 2, 3, 4), x => x == 3))
+    println(filter[Int](List(1, 2, 3, 4), _ == 3))
+    println(filterV2[Int](List(1, 2, 3, 4), _ == 3))
 
     // question 20 - Write a function flatMap, that works like map except that the function given will return a list
     // instead of a single result, and that list should be inserted into the final resulting list. e.g.
@@ -227,15 +227,38 @@ object Chapter3 {
 
     // question 28 - Write a function map, analogous to the method of the same name on List, that modifies each
     // element in a tree with a given function.
-    def treeMap[A, B](tree: Tree[A], f: A => B): Tree[B] = {
-      case Leaf(x) => Leaf(f(_))
-      case Branch(x, y) => Branch(treeMap(x, f), treeMap(y, f))
+    def treeMap[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
+      case Leaf(x) => Leaf(f(x))
+      case Branch(x, y) => Branch(treeMap(x)(f), treeMap(y)(f))
     }
 
+    println(treeMap(Branch(Leaf(10), Branch(Leaf(2), Branch(Leaf(2), Branch(Leaf(2), Leaf(9))))))(_ + 1))
+
     // 29: Generalize size, maximum, depth, and map, writing a new function fold that abstracts over their similarities.
-    // Reimplement them in terms of this more general function. Can you draw an analogy between this fold function and
+    // Re-implement them in terms of this more general function. Can you draw an analogy between this fold function and
     // the left and right folds for List?
+    def treeFold[A,B](t: Tree[A])(l: A => B)(b: (B,B) => B): B = t match {
+      case Leaf(x) => l(x)
+      case Branch(x, y) => b(treeFold(x)(l)(b), treeFold(y)(l)(b))
+    }
 
+    val tree = Branch(Branch(Leaf(5), Branch(Leaf(9), Leaf(3))), Branch(Leaf(25), Leaf(-3)))
+
+    // size
+    println(treeFold(tree)(_ => 1)(_ + 1 + _))
+
+    // maximum
+    val passThrough = treeFold(tree)(x => x) _
+
+    println(passThrough(_ max _))
+
+    //depth
+    println(treeFold(tree)(_ => 1)(1 + Math.max(_, _)))
+
+    def treeMapUsingFold[A, B](t: Tree[A], f: A => B): Tree[B] = {
+      treeFold(t)(a => Leaf(f(a)): Tree[B])(Branch(_, _))
+    }
+
+    println(treeMapUsingFold(tree, (x:Int) => (x + 10).toString: String))
   }
-
 }
