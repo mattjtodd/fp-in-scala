@@ -1,7 +1,6 @@
 /**
  * Created by utuba on 04/04/15.
  */
-package fpinscala.datastructures
 
 import scala.annotation.tailrec
 
@@ -29,6 +28,7 @@ object List {
 
   def tail[A](list:List[A]): List[A] = list match{
     case Cons(_, xs) => xs
+    case _ => ???
   }
 
   @tailrec

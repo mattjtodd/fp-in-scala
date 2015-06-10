@@ -1,9 +1,6 @@
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader
-import fpinscala.datastructures.List._
-import fpinscala.datastructures.{Cons, List, Nil}
-
 import scala.annotation.tailrec
 
+import List._
 /**
  * Created by utuba on 05/04/15.
  */
@@ -12,7 +9,7 @@ object Chapter3 {
     case Cons(x, Cons(2, Cons(4, _))) => x
     case Nil => 42
     case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
-    case Cons(h, t) => h + sum(t)
+    case Cons(h, t) => h + List.sum(t)
     case _ => 101
   }
 
