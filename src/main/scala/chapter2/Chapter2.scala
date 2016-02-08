@@ -3,11 +3,26 @@ package chapter2
 import scala.annotation.tailrec
 
 object Chapter2 {
+
+  /**
+    * Exercise 2.1
+    */
   def fib(n: Int): Int = {
     @tailrec
     def go(prev2: Int, prev1: Int, count: Int): Int = {
       if (count <= 0) prev2 else go(prev1, prev1 + prev2, count-1)
     }
     if (n <= 2) 1 else go(0, 1, n)
+  }
+
+  /**
+    * Exeecise 2.2
+    */
+  def isSorted[A] (as: Array[A], orderd: (A, A) => Boolean): Boolean = {
+    @tailrec
+    def loop(n: Int, result: Boolean): Boolean = {
+      if (!result || n >= as.length) result else loop(n + 1, orderd.apply(as(n-1), as(n)))
+    }
+    loop(1, true)
   }
 }
