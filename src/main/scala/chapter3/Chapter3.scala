@@ -1,6 +1,5 @@
-import scala.annotation.tailrec
+package chapter3
 
-import List._
 /**
  * Created by utuba on 05/04/15.
  */
