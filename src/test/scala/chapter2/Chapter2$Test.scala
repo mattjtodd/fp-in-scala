@@ -24,7 +24,7 @@ class Chapter2$Test extends UnitSpec {
     assert(isSorted(Array(10, 50, 300), (one: Int, two: Int) => one < two))
   }
 
-  "When Integer Add Function Curried apply" should "be ten" in {
+  "When add curried with 5 and 5 supplied" should "be ten" in {
     val addCurry = curry((a: Int, b: Int) => a + b)
     val addFive = addCurry(5)
 
