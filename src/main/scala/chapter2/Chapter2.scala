@@ -32,4 +32,11 @@ object Chapter2 {
   def curry[A, B, C] (f: (A, B) => C): A => B => C = {
     a => b => f(a, b)
   }
+
+  /**
+    * Exercise 2.4
+    */
+  def unCurry[A, B, C] (f: A => B => C): (A, B) => C = {
+    (a, b) => f(a)(b)
+  }
 }
