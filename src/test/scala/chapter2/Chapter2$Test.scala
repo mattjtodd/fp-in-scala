@@ -37,14 +37,23 @@ class Chapter2$Test extends UnitSpec {
     assert(addFive(5) == 10)
   }
 
-  // 2.3 - UnCurry
+  // 2.4 - UnCurry
 
   "When add uncurried with A + B + C 10" should "be 30" in {
     val curried = (a: Int) => (b: Int) => (c: Int) => a + b + c
-
     val uncurried = unCurry(curried)
 
     assert(uncurried(10, 10)(10) == 30)
+  }
+
+  // 2.5 - Compose
+
+  "Compose add ten and one" should "be 11" in {
+    val addTen = (a: Int) => a + 10
+    val addOne = (a: Int) => a + 1
+    val composed = compose(addTen, addOne)
+
+    assert(composed(0) == 11)
   }
 
 }
