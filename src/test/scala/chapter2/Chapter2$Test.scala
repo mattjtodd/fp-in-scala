@@ -1,6 +1,7 @@
 package chapter2
 
 import chapter2.Chapter2._
+import util.UnitSpec
 
 class Chapter2$Test extends UnitSpec {
 

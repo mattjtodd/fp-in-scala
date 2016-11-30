@@ -1,4 +1,4 @@
-package chapter2
+package util
 
 import org.scalatest._
 
