@@ -248,8 +248,7 @@ object Chapter3 {
       def go(state: (List[A], List[A])): Boolean = state match {
         case (Nil, _) => false
         case (_, Nil) => true
-        case (Cons(suph, supt), Cons(subh, subt)) if suph == subh => go(supt, subt)
-        case (Cons(_, supt), _) => go(supt, sub)
+        case (Cons(suph, supt), Cons(subh, subt)) => if (suph == subh) go(supt, subt) else go(supt, sub)
       }
       go(sup, sub)
     }
