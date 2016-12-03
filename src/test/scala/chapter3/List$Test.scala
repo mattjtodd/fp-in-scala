@@ -125,4 +125,11 @@ class List$Test extends UnitSpec {
     assert(addLists(List(1, 2, 3, 4), List(4, 5, 6)) == List(5, 7, 9))
   }
 
+  "3.23 Given [1,2,3] and [4,5,6] zipWith add" should "be [5,7,9]" in {
+    assert(zipWith(List(1, 2, 3, 4), List(4, 5, 6))(_ + _) == List(5, 7, 9))
+  }
+
+  "3.24 Given [1,2,3,4,5] and [3,4] hasSubsequence" should "be true" in {
+    assert(hasSubsequence(List(1, 2, 3, 4, 5), List(3, 4)))
+  }
 }

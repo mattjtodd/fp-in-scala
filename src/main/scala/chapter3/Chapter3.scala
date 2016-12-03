@@ -244,18 +244,20 @@ object Chapter3 {
       * List(1,2,3,4) would have List(1,2), List(2,3), and List(4) as subsequences, among others.
       */
     def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
-      def go(subs: (List[A], List[A])): Boolean = {
-        case (_, Nil) => false
-        case (Nil, _) => false
+      @tailrec
+      def go(state: (List[A], List[A], List[A])): Boolean = state match {
+        case (_, _, Nil) => true
+        case (Cons(suph, supt), Cons(subh, _), Cons(acch, acct)) if suph == acch => go(supt, sub, acct)
+        case (Cons(_, supt), subx, _) => go(supt, subx, subx)
       }
+      go(sup, sub, sub)
+    }
 
       // find each match in sup of sub.head
 
       // take while values in both match until end of all in sub consumed
 
       // if not all
-
-    }
 
   }
 
