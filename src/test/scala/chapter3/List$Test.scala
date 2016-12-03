@@ -136,4 +136,8 @@ class List$Test extends UnitSpec {
   "3.24 Given [1,2,3,4,5] and [7] hasSubsequence" should "be true" in {
     assert(!hasSubsequence(List(1, 2, 3, 4, 5), List(7)))
   }
+
+  "3.24 Given [1,2,4,2,3,4,5] and [2,3] hasSubsequence" should "be true" in {
+    assert(hasSubsequence(List(1, 2, 3, 4, 5), List(2, 3)))
+  }
 }

@@ -245,13 +245,13 @@ object Chapter3 {
       */
     def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
       @tailrec
-      def go(state: (List[A], List[A], List[A])): Boolean = state match {
-        case (Nil, _, _) => false
-        case (_, _, Nil) => true
-        case (Cons(suph, supt), Cons(subh, _), Cons(acch, acct)) if suph == acch => go(supt, sub, acct)
-        case (Cons(_, supt), subx, _) => go(supt, subx, subx)
+      def go(state: (List[A], List[A])): Boolean = state match {
+        case (Nil, _) => false
+        case (_, Nil) => true
+        case (Cons(suph, supt), Cons(subh, subt)) if suph == subh => go(supt, subt)
+        case (Cons(_, supt), _) => go(supt, sub)
       }
-      go(sup, sub, sub)
+      go(sup, sub)
     }
 
       // find each match in sup of sub.head
