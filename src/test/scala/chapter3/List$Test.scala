@@ -116,5 +116,13 @@ class List$Test extends UnitSpec {
     )
   }
 
+  "3.21 Given [1,2,3,4,5] filterWithFlatMap with even" should "be [2,4]" in {
+    assert(filterWithFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) == List(2, 4)
+    )
+  }
+
+  "3.22 Given [1,2,3] and [4,5,6] addLists" should "be [5,7,9]" in {
+    assert(addLists(List(1, 2, 3, 4), List(4, 5, 6)) == List(5, 7, 9))
+  }
 
 }

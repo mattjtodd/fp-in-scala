@@ -202,8 +202,59 @@ object Chapter3 {
       * of a single result, and that list should be inserted into the final resulting list.
       */
     def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = as match {
-      case Cons(head, tail) => appendFoldLeft(f(head), flatMap(tail)(f))
+      case Cons(head, tail) => appendFoldRight(f(head), flatMap(tail)(f))
       case _ => Nil
+    }
+
+    /**
+      * 3.21 Use flatMap to implement filter.
+      */
+    def filterWithFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+      flatMap(as)(x => if (f(x)) List(x) else Nil)
+    }
+
+    /**
+      * 3.22 Write a function that accepts two lists and constructs a new list by adding correspond- ing elements.
+      * For example, List(1,2,3) and List(4,5,6) become List(5,7,9).
+      */
+    def addLists(left: List[Int], right: List[Int]): List[Int] = {
+      def go(leftRight: (List[Int], List[Int])): List[Int] = leftRight match {
+        case (Nil, _) => Nil
+        case (_, Nil) => Nil
+        case (Cons(lefth, leftt), Cons(righth, rightt)) => Cons(lefth + righth, go(leftt, rightt))
+      }
+      go(left, right)
+    }
+
+    /**
+      * 3.23 Generalize the function you just wrote so that it’s not specific to integers or addition.
+      * Name your generalized function zipWith.
+      */
+    def zipWith[A, B](left: List[A], right: List[A])(f: (A, A) => B): List[B] = {
+      def go(leftRight: (List[A], List[A])): List[B] = leftRight match {
+        case (Nil, _) => Nil
+        case (_, Nil) => Nil
+        case (Cons(lefth, leftt), Cons(righth, rightt)) => Cons(f(lefth, righth), go(leftt, rightt))
+      }
+      go(left, right)
+    }
+
+    /**
+      * 3.24 implement hasSubsequence for checking whether a List contains another List as a subsequence. For instance,
+      * List(1,2,3,4) would have List(1,2), List(2,3), and List(4) as subsequences, among others.
+      */
+    def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+      def go(subs: (List[A], List[A])): Boolean = {
+        case (_, Nil) => false
+        case (Nil, _) => false
+      }
+
+      // find each match in sup of sub.head
+
+      // take while values in both match until end of all in sub consumed
+
+      // if not all
+
     }
 
   }
