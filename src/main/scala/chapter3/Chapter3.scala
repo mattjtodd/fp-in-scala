@@ -246,6 +246,7 @@ object Chapter3 {
     def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
       @tailrec
       def go(state: (List[A], List[A], List[A])): Boolean = state match {
+        case (Nil, _, _) => false
         case (_, _, Nil) => true
         case (Cons(suph, supt), Cons(subh, _), Cons(acch, acct)) if suph == acch => go(supt, sub, acct)
         case (Cons(_, supt), subx, _) => go(supt, subx, subx)
