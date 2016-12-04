@@ -2,6 +2,8 @@ package chapter3
 
 import chapter3.Chapter3.List._
 import chapter3.Chapter3.{Cons, List, Nil}
+import chapter3.Chapter3.Tree._
+import chapter3.Chapter3.{Branch, Leaf}
 import util.UnitSpec
 
 class List$Test extends UnitSpec {
@@ -139,5 +141,13 @@ class List$Test extends UnitSpec {
 
   "3.24 Given [1,2,4,2,3,4,5] and [2,3] hasSubsequence" should "be true" in {
     assert(hasSubsequence(List(1, 2, 3, 4, 5), List(2, 3)))
+  }
+
+  "3.25 Given Branch(Leaf(1), Leaf(2)) size" should "be 3" in {
+    assert(nodeCount(Branch(Leaf(1), Leaf(2))) == 3)
+  }
+
+  "3.25 Given Branch(Leaf(1), Leaf(2)) size" should "be 5" in {
+    assert(maxLeaf(Branch(Leaf(1), Leaf(5))) == 5)
   }
 }

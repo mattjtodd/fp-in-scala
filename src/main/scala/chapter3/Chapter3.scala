@@ -26,6 +26,18 @@ object Chapter3 {
       if (as.isEmpty) Nil
       else Cons(as.head, apply(as.tail: _*))
 
+    // 3.1 What will be the result of the following match expression?
+
+    //  val x = List(1,2,3,4,5) match {
+    //    case Cons(x, Cons(2, Cons(4, _))) => x
+    //    case Nil => 42
+    //    case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
+    //    case Cons(h, t) => h + sum(t)
+    //    case _ => 101
+    //  }
+
+    // 3!
+
     /**
       * 3.2 Implement the function tail for removing the first element of a List. Note that the function takes constant time.
       * What are different choices you could make in your implementation if the List is Nil?
@@ -252,13 +264,6 @@ object Chapter3 {
       }
       go(sup, sub)
     }
-
-      // find each match in sup of sub.head
-
-      // take while values in both match until end of all in sub consumed
-
-      // if not all
-
   }
 
   // The tree trait
@@ -266,17 +271,32 @@ object Chapter3 {
   case class Leaf[A](value: A) extends Tree[A]
   case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
-  // 3.1 What will be the result of the following match expression?
+  object Tree {
 
-  //  val x = List(1,2,3,4,5) match {
-  //    case Cons(x, Cons(2, Cons(4, _))) => x
-  //    case Nil => 42
-  //    case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
-  //    case Cons(h, t) => h + sum(t)
-  //    case _ => 101
-  //  }
+    /**
+      * Write a function size that counts the number of nodes (leaves and branches) in a tree.
+      */
+    def nodeCount[A](tree: Tree[A]): Int = {
+      @tailrec
+      def go(trees: List[Tree[A]], acc: Int): Int = trees match {
+        case Nil => acc
+        case Cons(Leaf(_), next) => go(next, acc + 1)
+        case Cons(Branch(left, right), next) => go(List.appendFoldLeft(List(left, right), next), acc + 1)
+      }
+      go(List(tree), 0)
+    }
 
-  // 3!
-
-
+    /**
+      * 3.26 Write a function maximum that returns the maximum element in a Tree[Int].
+      */
+    def maxLeaf(tree: Tree[Int]): Int = {
+      @tailrec
+      def go(trees: List[Tree[Int]], acc: Int): Int = trees match {
+        case Nil => acc
+        case Cons(Leaf(value), next) => go(next, acc max value)
+        case Cons(Branch(left, right), next) => go(List.appendFoldLeft(List(left, right), next), acc)
+      }
+      go(List(tree), 0)
+    }
+  }
 }
