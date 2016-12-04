@@ -20,7 +20,6 @@ class List$Test extends UnitSpec {
     assert(setHead("New", Cons("Old")) == Cons("New"))
   }
 
-
   "3.4 Drop with single elemnts" should "drop to Nil" in {
     assert(drop(Cons(""), 1) == Nil)
   }
@@ -50,11 +49,6 @@ class List$Test extends UnitSpec {
   }
 
   "3.8 foldRight over with empty list to Cons" should "return the same list" in {
-    /**
-      * 3.8 See what happens when you pass Nil and Cons themselves to foldRight, like this:
-      *   foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))
-      * What do you think this says about the relationship between foldRight and the data constructors of List?
-      */
     assert(foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_)) == List(1, 2, 3))
   }
 
@@ -103,23 +97,19 @@ class List$Test extends UnitSpec {
   }
 
   "3.18 Given [1,2,3,4,5] map with add one " should "be [2,3,4,5,6]" in {
-    assert(map(List(1, 2, 3, 4, 5))(_ + 1) == List(2, 3, 4, 5, 6)
-    )
+    assert(map(List(1, 2, 3, 4, 5))(_ + 1) == List(2, 3, 4, 5, 6))
   }
 
   "3.19 Given [1,2,3,4,5] filter with even" should "be [2,4]" in {
-    assert(filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) == List(2, 4)
-    )
+    assert(filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) == List(2, 4))
   }
 
   "3.20 Given [1,2,3,4,5] flatMap with duplicate" should "be [1,1,2,2,3,3,4,4,5,5]" in {
-    assert(flatMap(List(1, 2, 3, 4, 5))(x => List(x, x)) == List(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)
-    )
+    assert(flatMap(List(1, 2, 3, 4, 5))(x => List(x, x)) == List(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
   }
 
   "3.21 Given [1,2,3,4,5] filterWithFlatMap with even" should "be [2,4]" in {
-    assert(filterWithFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) == List(2, 4)
-    )
+    assert(filterWithFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) == List(2, 4))
   }
 
   "3.22 Given [1,2,3] and [4,5,6] addLists" should "be [5,7,9]" in {
