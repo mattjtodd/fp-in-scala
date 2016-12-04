@@ -167,4 +167,8 @@ class List$Test extends UnitSpec {
   "3.29 Given Branch(Leaf(1), Leaf(2)) depthViaFold" should "be 2" in {
     assert(depthViaFold(Branch(Leaf(1), Leaf(2))) == 2)
   }
+
+  "3.29 Given Branch(Leaf(1), Leaf(2)) mapViaFold with multiply by two" should "be Branch(Leaf(2), Leaf(4))" in {
+    assert(mapViaFold(Branch(Leaf(1), Leaf(2)))(_ * 2) == Branch(Leaf(2), Leaf(4)))
+  }
 }

@@ -345,7 +345,11 @@ object Chapter3 {
     }
 
     def depthViaFold[A](tree: Tree[A]): Int = {
-      foldTree(tree)(value => 1)((l, r) => 1 + (l max r))
+      foldTree(tree)(_ => 1)((l, r) => 1 + (l max r))
+    }
+
+    def mapViaFold[A, B](tree: Tree[A])(f: A => B) = {
+      foldTree(tree)(value => Leaf(f(value)): Tree[B]) (Branch(_, _))
     }
   }
 }
