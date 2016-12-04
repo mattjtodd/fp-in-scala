@@ -1,9 +1,8 @@
 package chapter3
 
 import chapter3.Chapter3.List._
-import chapter3.Chapter3.{Cons, List, Nil}
+import chapter3.Chapter3.{Branch, Cons, Leaf, List, Nil, Tree}
 import chapter3.Chapter3.Tree._
-import chapter3.Chapter3.{Branch, Leaf}
 import util.UnitSpec
 
 class List$Test extends UnitSpec {
@@ -147,7 +146,35 @@ class List$Test extends UnitSpec {
     assert(nodeCount(Branch(Leaf(1), Leaf(2))) == 3)
   }
 
-  "3.25 Given Branch(Leaf(1), Leaf(2)) size" should "be 5" in {
+  "3.26 Given Branch(Leaf(1), Leaf(5)) maxLeaf" should "be 5" in {
     assert(maxLeaf(Branch(Leaf(1), Leaf(5))) == 5)
+  }
+
+  "3.27 Given Branch(Leaf(1), Branch(Leaf(2), Branch(Leaf(3), Leaf(4))) depth" should "be 4" in {
+    assert(depth(Branch(Leaf(1), Branch(Leaf(2), Branch(Leaf(3), Leaf(4))))) == 4)
+  }
+
+  "3.27 Given Branch(Leaf(1), Leaf(2)) depth" should "be 2" in {
+    assert(depth(Branch(Leaf(1), Leaf(2))) == 2)
+  }
+
+  "3.28 Given Branch(Leaf(1), Leaf(2)) mapTree with multiply by two" should "be Branch(Leaf(2), Leaf(4))" in {
+    assert(mapTree(Branch(Leaf(1), Leaf(2)))(_ * 2) == Branch(Leaf(2), Leaf(4)))
+  }
+
+  "3.29 Given Branch(Leaf(1), Leaf(2)) sizeViaFoldTree" should "be 3" in {
+    assert(sizeViaFoldTree(Branch(Leaf(1), Leaf(2))) == 3)
+  }
+
+  "3.29 Given Branch(Leaf(1), Leaf(5)) maxLeafViaFold" should "be 5" in {
+    assert(maxLeafViaFold(Branch(Leaf(1), Leaf(5))) == 5)
+  }
+
+  "3.29 Given Branch(Leaf(1), Branch(Leaf(2), Branch(Leaf(3), Leaf(4))) depthViaFold" should "be 4" in {
+    assert(depthViaFold(Branch(Leaf(1), Branch(Leaf(2), Branch(Leaf(3), Leaf(4))))) == 4)
+  }
+
+  "3.29 Given Branch(Leaf(1), Leaf(2)) depthViaFold" should "be 2" in {
+    assert(depthViaFold(Branch(Leaf(1), Leaf(2))) == 2)
   }
 }

@@ -274,7 +274,7 @@ object Chapter3 {
   object Tree {
 
     /**
-      * Write a function size that counts the number of nodes (leaves and branches) in a tree.
+      * 3.25Write a function size that counts the number of nodes (leaves and branches) in a tree.
       */
     def nodeCount[A](tree: Tree[A]): Int = {
       @tailrec
@@ -284,6 +284,11 @@ object Chapter3 {
         case Cons(Branch(left, right), next) => go(List.appendFoldLeft(List(left, right), next), acc + 1)
       }
       go(List(tree), 0)
+    }
+
+    def nodeCount2[A](tree: Tree[A]): Int = tree match {
+      case Leaf(value) => 1
+      case Branch(left, right) => 1 + nodeCount2(left) + nodeCount2(right)
     }
 
     /**
@@ -297,6 +302,50 @@ object Chapter3 {
         case Cons(Branch(left, right), next) => go(List.appendFoldLeft(List(left, right), next), acc)
       }
       go(List(tree), 0)
+    }
+
+    /**
+      * 3.27 Write a function depth that returns the maximum path length from the root of a tree
+      * to any leaf.
+      */
+    def depth[A](tree: Tree[A]): Int = {
+      @tailrec
+      def go(trees: List[Tree[A]], depth: Int, acc: Int): Int = trees match {
+        case Nil => acc
+        case Cons(Leaf(_), next) => go(next, depth, acc max depth + 1)
+        case Cons(Branch(left, right), next) => go(List.appendFoldRight(List(left, right), next), depth + 1, acc)
+      }
+      go(List(tree), 0, 0)
+    }
+
+    /**
+      * 3.28 Write a function map, analogous to the method of the same name on List, that modifies
+      * each element in a tree with a given function.
+      */
+    def mapTree[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
+      case Leaf(value) => Leaf(f(value))
+      case Branch(left, right) => Branch(mapTree(left)(f), mapTree(right)(f))
+    }
+
+    /**
+      * 3.29 Generalize size, maximum, depth, and map, writing a new function fold that abstracts
+      * over their similarities. Re-implement them in terms of this more general function.
+      */
+    def foldTree[A, B](tree: Tree[A])(f: A => B)(g: (B, B) => B): B = tree match {
+      case Leaf(value) => f(value)
+      case Branch(left, right) =>  g(foldTree(left)(f)(g), foldTree(right)(f)(g))
+    }
+
+    def sizeViaFoldTree[A](tree: Tree[A]): Int = {
+      foldTree(tree)(_ => 1)(1 + _ + _)
+    }
+
+    def maxLeafViaFold(tree: Tree[Int]): Int = {
+      foldTree(tree)(value => value)(_ max _)
+    }
+
+    def depthViaFold[A](tree: Tree[A]): Int = {
+      foldTree(tree)(value => 1)((l, r) => 1 + (l max r))
     }
   }
 }
