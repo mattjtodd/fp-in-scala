@@ -1,7 +1,7 @@
 package chapter3
 
 import chapter3.Chapter3.List._
-import chapter3.Chapter3.{Branch, Cons, Leaf, List, Nil, Tree}
+import chapter3.Chapter3.{Branch, Cons, Leaf, List, Nil}
 import chapter3.Chapter3.Tree._
 import util.UnitSpec
 
