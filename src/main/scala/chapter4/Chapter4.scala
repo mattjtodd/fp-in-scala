@@ -8,13 +8,13 @@ object Chapter4 {
       }
 
       def flatMap[B](f: A => Option[B]): Option[B] = this match {
-        case None => None
         case Some(value) => f(value)
+        case none @ None => none
       }
 
       def getOrElse[B >: A](default: => B): B = this match {
-        case None => default
         case Some(value) => value
+        case None => default
       }
 
       def orElse[B >: A](ob: => Option[B]): Option[B] = {
@@ -61,4 +61,31 @@ object Chapter4 {
   def sequenceTraverse[A](a: List[Option[A]]): Option[List[A]] = {
     traverse(a)(value => value)
   }
+
+  /**
+    * 4.6 Implement versions of map, flatMap, orElse, and map2 on Either that operate on the Right value.
+    */
+  sealed trait Either[+E, +A] {
+
+    def map[B](f: A => B): Either[E, B] = flatMap(value => Right(f(value)))
+
+    def flatMap[EE >: E, B](f: A => Either[EE, B]): Either[EE, B] = this match {
+      case Right(value) => f(value)
+      case either @ Left(_) => either
+    }
+
+    def orElse[EE >: E,B >: A](b: => Either[EE, B]): Either[EE, B] = this match {
+      case Left(_) => b
+      case _ => this
+    }
+
+    def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] =
+      for {
+        aa <- this
+        bb <- b
+      } yield f(aa, bb)
+  }
+
+  case class Left[+E](value: E) extends Either[E, Nothing]
+  case class Right[+A](value: A) extends Either[Nothing, A]
 }

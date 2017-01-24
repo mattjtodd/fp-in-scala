@@ -4,7 +4,7 @@ import chapter4.Chapter4.{None, Some, map2, sequence, traverse, sequenceTraverse
 
 import org.scalatest._
 
-class OptionTest  extends FlatSpec with Matchers with
+class OptionTest extends FlatSpec with Matchers with
   OptionValues with Inside with Inspectors {
 
   "4.0 map with Some(4) add 4 " should "Some(8)" in  {
