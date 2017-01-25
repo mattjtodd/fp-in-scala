@@ -1,6 +1,6 @@
 package chapter4
 
-import chapter4.Chapter4.{None, Some, map2, sequence, traverse, sequenceTraverse}
+import chapter4.Option._
 
 import org.scalatest._
 
@@ -12,7 +12,7 @@ class OptionTest extends FlatSpec with Matchers with
   }
 
   "4.3 map2 None, None " should "be None" in  {
-    assert(map2(None, None)((a, b) => a) == None)
+    assert(map2(None, None)((a, _) => a) == None)
   }
 
   "4.3 map2 Some('Test'), None " should "be None" in  {
