@@ -4,8 +4,7 @@ import chapter4.Option._
 
 import org.scalatest._
 
-class OptionTest extends FlatSpec with Matchers with
-  OptionValues with Inside with Inspectors {
+class OptionTest extends FlatSpec with Matchers with OptionValues with Inside with Inspectors {
 
   "4.0 map with Some(4) add 4 " should "Some(8)" in  {
     assert(Some(4).map(_ + 4) == Some(8))
